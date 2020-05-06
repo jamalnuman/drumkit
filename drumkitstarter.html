@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Drum Kit</title>
+  <link rel="stylesheet" href="drumkitstarter.css">
+</head>
+<body>
+
+
+  <div class="keys">
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">clap</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">hihat</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="70" class="key">
+      <kbd>F</kbd>
+      <span class="sound">openhat</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="72" class="key">
+      <kbd>H</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="75" class="key">
+      <kbd>K</kbd>
+      <span class="sound">tom</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">tink</span>
+    </div>
+  </div>
+
+  <audio data-key="65" src="http://bigsamples.free.fr/d_kit/clap/dc_clap.wav"></audio>
+  <audio data-key="83" src="http://cd.textfiles.com/swextrav8/swextrav8-7/wav/msb9718.wav"></audio>
+  <audio data-key="68" src="http://dight310.byu.edu/media/audio/FreeLoops.com/3/3/Free%20Drum%20Kick%2018-930-Free-Loops.com.mp3"></audio>
+  <audio data-key="70" src="http://cd.textfiles.com/cdaction/cdaction47b/BEAT2000/SOUNDS/SFX/GTR1.WAV"></audio>
+  <audio data-key="71" src="http://www.audiobulb.com/create/samples/snare_-_sinessnare.wav"></audio>
+  <audio data-key="72" src="http://www.burnkit2600.com/temp/HR-16/HR-16-WAVs/30-ride%20cymbal%20bell.wav"></audio>
+  <audio data-key="74" src="http://www.denhaku.com/r_box/sr16/sr16perc/losticks.wav"></audio>
+  <audio data-key="75" src="http://cd.textfiles.com/sbsw/BEEPCHMS/SAX.WAV"></audio>
+  <audio data-key="76" src="http://www.denhaku.com/r_box/linn/cowb.wav"></audio>
+
+<script>
+window.addEventListener('keydown', function(e){//adding an event listener to each key being pressed DOWN
+  
+  let audio = document.querySelector(`audio[data-key='${e.keyCode}']`)//storing the keyCode value in a variable..remember the event has the key code in a property
+  //named 'keyCode'
+  let key = document.querySelector(`div[data-key='${e.keyCode}']`)//same as above
+    // console.log(audio);
+    // console.log(key);
+    key.classList.add('playing');//we are adding the classlist of "playing" from CSS. 
+    if(!audio) return;//if the appropriate button was not pressed, then this will take you out of the function
+    
+    audio.currentTime = 0;//this allows you to repeatedly press the button and start the sound again. 
+    audio.play();//allows you to play the sound stored for each individual keyCode. 
+    });
+
+  function removeTransition(e){//function to remove the class that was added on line 68
+    //console.log(e);
+    //console.log(e.propertyName);
+    if(e.propertyName !== 'transform') return; 
+    e.target.classList.remove('playing')//removes the class added on line 68
+  }
+
+  
+
+  const keys = document.querySelectorAll('.key')//here we are targeting a class that holds all the keys. 
+    keys.forEach(function(item){//we are using forEach(), because we will be adding an event listener to all the appropriate keys. 
+    item.addEventListener('transitionend', removeTransition)//the event that we are listening to is "transitionend" and then we are going to run a function 
+    //called removeTransition. 
+  })
+
+
+
+
+</script>
+
+
+</body>
+</html>
